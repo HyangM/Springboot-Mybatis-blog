@@ -10,21 +10,21 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Post {
 	private int id;
-	private String username;
-	private String pasword;
-	private String email;
-	private String profile;
+	private String title;
+	private String content;
+	private int userId;
 	private Timestamp createDate;
 	
 	@Builder
-	public User(String username, String pasword, String email, String profile, Timestamp createDate) {
+	public Post(String title, String content, int userId, Timestamp createDate) {
 		super();
-		this.username = username;
-		this.pasword = pasword;
-		this.email = email;
-		this.profile = profile;
+		this.title = title;
+		this.content = content;
+		this.userId = userId;
 		this.createDate = createDate;
-	}		
+	}
+
+
 }

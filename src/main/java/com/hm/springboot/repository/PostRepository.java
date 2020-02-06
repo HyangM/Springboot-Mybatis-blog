@@ -1,6 +1,6 @@
 package com.hm.springboot.repository;
 
-public interface UserRepository {
+public interface PostRepository {
 	// 전체보기
 //	List<User> findAll();
 	// 상세보기

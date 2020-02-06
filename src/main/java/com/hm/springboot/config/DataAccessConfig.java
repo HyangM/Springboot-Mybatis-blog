@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @Configuration
-@MapperScan(basePackages = "com.cos.springboot.repository")
+@MapperScan(basePackages = "com.hm.springboot.repository")
 public class DataAccessConfig {
 
     @Bean

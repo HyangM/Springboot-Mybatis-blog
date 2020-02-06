@@ -2,13 +2,13 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cos.springboot.repository.UserRepository">
+<mapper namespace="com.hm.springboot.repository.UserRepository">
 
-  <select id="findAll" resultType="com.cos.springboot.model.User">
-    select * from mem order by id desc
+  <select id="findAll" resultType="com.hm.springboot.model.User">
+    select * from user order by id desc
   </select>
     
-  <select id="findById" resultType="com.cos.springboot.model.User">
+ <!--  <select id="findById" resultType="com.cos.springboot.model.User">
     select * from mem where id = #{id}
   </select>
   
@@ -20,7 +20,7 @@
   <update id="update">
     update mem set password = #{password}, email = #{email}
     where id = #{id}
-  </update>
+  </update> -->
   
   <delete id="delete">
     delete from mem where id = #{id}

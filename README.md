@@ -32,7 +32,7 @@ use spring;
 ```
 ```sql
 CREATE TABLE user(
-	id int auto_increment primary key,
+    id int auto_increment primary key,
     username varchar(100) not null,
     password varchar(100) not null,
     email varchar(100),
@@ -42,7 +42,7 @@ CREATE TABLE user(
 ```
 ```sql
 CREATE TABLE post(
-	id int auto_increment primary key,
+    id int auto_increment primary key,
     title varchar(100) not null,
     content longtext,
     userId int,
@@ -52,7 +52,7 @@ CREATE TABLE post(
 ```
 ```sql
 CREATE TABLE comment(
-	id int auto_increment primary key,
+    id int auto_increment primary key,
     userId int,
     postId int,
     content varchar(300) not null,
