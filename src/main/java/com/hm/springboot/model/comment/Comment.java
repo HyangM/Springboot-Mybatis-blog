@@ -1,4 +1,4 @@
-package com.hm.springboot.model;
+package com.hm.springboot.model.comment;
 
 import java.sql.Timestamp;
 
