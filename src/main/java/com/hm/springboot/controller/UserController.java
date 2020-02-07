@@ -57,16 +57,13 @@ public class UserController {
 	// 인증, 동일인 체크
 	@GetMapping({"/user/profile/{id}"})
 	public String profile(@PathVariable int id) {
+		
 		User principal = (User)session.getAttribute("principal");
-		if(principal != null) {
-			if(principal.getId() == id) {
-				return "/user/profile";
-			}else {
-				// 잘못된 접근입니다.권한이 없습니다.
-				return "/user/login";
-			}
+		
+		if(principal.getId() == id) {
+			return "/user/profile";
 		}else {
-			// 인증이 되지 않은 사용자입니다. 로그인 해주세요.
+			// 잘못된 접근입니다.권한이 없습니다.
 			return "/user/login";
 		}
 	}
