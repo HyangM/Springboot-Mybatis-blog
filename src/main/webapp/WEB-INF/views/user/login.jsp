@@ -16,6 +16,29 @@
 	<button id="login--submit" class="btn btn-primary">로그인</button>
 </div>
 
+<script>
+	$('#login--submit').on('click', function(){
+		var data = {
+			username: $('#username').val(),
+			password: $('#password').val()
+		}; 
+
+		$.ajax({
+			type:'POST',
+			url:'/user/login',
+			data:JSON.stringify(data),
+			contentType:'application/json; charset=utf-8',
+			dataType:'json'
+		}).done(function(r){
+			alert("로그인 성공");
+			location.href='/';
+		}).fail(function(r){
+			alert("로그인 실패");
+		});
+	});
+
+</script>
+
 <%@include file="../include/footer.jsp"%>
 
 

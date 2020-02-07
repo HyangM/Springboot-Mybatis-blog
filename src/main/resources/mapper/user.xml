@@ -3,18 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hm.springboot.repository.UserRepository">
-
-  <select id="findAll" resultType="com.hm.springboot.model.user.User">
-    select * from user order by id desc
-  </select>
-  
-  <select id="findByUsername" resultType="int">
-    select count(*) from user where username = #{username}
-  </select>
-    
+     
    <insert id="save">
 	 insert into user(username, password, email, createDate) 
 	 values(#{username},#{password},#{email},now())
    </insert>
+   
+  <select id="findByUsername" resultType="int">
+    select count(*) from user where username = #{username}
+  </select>
+
+  <select id="findByUsernameAndPassword" resultType="com.hm.springboot.model.user.User">
+    select id,username,email,profile from user where username = #{username} and password = #{password}
+  </select>
    
 </mapper>
