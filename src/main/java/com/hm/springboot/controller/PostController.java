@@ -1,5 +1,7 @@
 package com.hm.springboot.controller;
 
+// 시큐리티 구현 완료
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
