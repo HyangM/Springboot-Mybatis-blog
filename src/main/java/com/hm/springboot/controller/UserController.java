@@ -1,11 +1,8 @@
 package com.hm.springboot.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.management.relation.Role;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -26,6 +23,8 @@ import com.hm.springboot.model.user.User;
 import com.hm.springboot.model.user.dto.ReqJoinDto;
 import com.hm.springboot.model.user.dto.ReqLoginDto;
 import com.hm.springboot.service.UserService;
+
+// release 가지 연습
 
 @Controller
 public class UserController {
