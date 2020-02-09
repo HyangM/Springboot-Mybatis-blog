@@ -12,7 +12,8 @@ $('#join--submit').on('click',function(){
 		type:'POST',
 		url:'/user/join',
 		data:JSON.stringify(data),
-		contentType:'application/json; charset=utf-8'
+		contentType:'application/json; charset=utf-8',
+		dataType:'json'
 	}).done(function(r){
 		if(r.statusCode == 200){
 			alert('회원가입 성공');

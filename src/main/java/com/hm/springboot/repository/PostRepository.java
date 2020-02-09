@@ -1,14 +1,19 @@
 package com.hm.springboot.repository;
 
+import java.util.List;
+
+import com.hm.springboot.model.post.Post;
+import com.hm.springboot.model.post.dto.ReqUpdateDto;
+import com.hm.springboot.model.post.dto.ReqWriteDto;
+
 public interface PostRepository {
-	// 전체보기
-//	List<User> findAll();
-	// 상세보기
-//	Mem findById(int id);
-//	// 회원가입
-//	int save(RequestMemJoinDto mem);
-//	// 회원수정
-//	int update(RequestMemUpdateDto mem);
-//	// 회원삭제
-//	int delete(int id);
+	int save(ReqWriteDto dto);
+	
+	List<Post> findAll();
+	
+	Post findOne(int postid);
+	
+	int update(ReqUpdateDto dto);
+	
+	int delete(int postid);
 }

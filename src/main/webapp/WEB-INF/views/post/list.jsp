@@ -6,27 +6,19 @@
 	<table class="table">
 		<thead class="thead-dark">
 			<tr>
-				<th>Firstname</th>
-				<th>Lastname</th>
-				<th>Email</th>
+				<th>No</th>
+				<th>제목</th>
+				<th>내용</th>
 			</tr>
 		</thead>
 		<tbody>
+		<c:forEach var="post" items="${posts}">
 			<tr>
-				<td>John</td>
-				<td>Doe</td>
-				<td>john@example.com</td>
-			</tr>
-			<tr>
-				<td>Mary</td>
-				<td>Moe</td>
-				<td>mary@example.com</td>
-			</tr>
-			<tr>
-				<td>July</td>
-				<td>Dooley</td>
-				<td>july@example.com</td>
-			</tr>
+				<td>${post.id}</td>
+				<td><a href="/post/detail/${post.id}">${post.title}</a></td>
+				<td><a href="/post/detail/${post.id}">${post.content}</a></td>
+			</tr>		
+		</c:forEach>
 		</tbody>
 	</table>
 </div>

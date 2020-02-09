@@ -7,5 +7,25 @@
   <select id="findAll" resultType="com.hm.springboot.model.post.Post">
     select * from post order by id desc
   </select>
+  
+  <select id="findOne" resultType="com.hm.springboot.model.post.Post">
+    select * from post where id = #{postid}
+  </select>
+  
+   <insert id="save">
+	 insert into post(title, content, userId, createDate) 
+	 values(#{title},#{content},#{userId},now())
+   </insert> 
+   
+   <update id="update">
+	 update post 
+	    set title = #{title}, 
+	        content = #{content} 
+	  where id = #{postid}
+   </update>   
+   
+   <delete id="delete">
+	 delete from post where id = #{postid}
+   </delete>   
       
 </mapper>

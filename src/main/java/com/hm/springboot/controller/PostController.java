@@ -1,25 +1,48 @@
 package com.hm.springboot.controller;
 
-// 시큐리티 구현 완료
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hm.springboot.model.RespCM;
+import com.hm.springboot.model.post.Post;
+import com.hm.springboot.model.post.dto.ReqUpdateDto;
+import com.hm.springboot.model.post.dto.ReqWriteDto;
 import com.hm.springboot.model.user.User;
+import com.hm.springboot.service.PostService;
 
 @Controller
 public class PostController {
+		
+	@Autowired
+	private PostService postService;
 	
 	@Autowired
 	private HttpSession session;
 
 	@GetMapping({"","/","post"})
-	public String posts() {
+	public String posts(Model model) {
+		
+		List<Post> posts = postService.글리스트();
+		model.addAttribute("posts", posts);
 		return "/post/list";
 	}
 	
@@ -34,18 +57,81 @@ public class PostController {
 		return "/post/write";	
 	}
 	
+	// 인증 체크
+	@PostMapping({"/post/write"})
+	public ResponseEntity<?> write(@Valid @RequestBody ReqWriteDto dto, BindingResult bindingResult) {
+
+		if(bindingResult.hasErrors()) {
+			Map<String, String> errorMap = new HashMap<>();
+			for(FieldError error:bindingResult.getFieldErrors()) {
+				errorMap.put(error.getField(), error.getDefaultMessage());
+			}
+			return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
+		}
+		
+		int result =  postService.글쓰기(dto);
+		if(result == 1) {
+			return new ResponseEntity<RespCM>(new RespCM(200,"ok"),HttpStatus.OK);
+		}else {
+			return new ResponseEntity<RespCM>(new RespCM(500,"fail"),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
 	// 인증 체크, 동일인 체크
 	@GetMapping({"/post/update/{postid}"})
-	public String update(@PathVariable int postid, @RequestParam int userId) {
+	public String update(@PathVariable int postid, @RequestParam int userId, Model model) {
 		
 		User principal = (User)session.getAttribute("principal");
 		
 		if(principal.getId() == userId) {
-			return "/user/login";
+			Post post = postService.글상세조회(postid); 
+			
+			model.addAttribute("post", post);
+			
+			return "/post/update";
+		}else {
+			return null;
 		}
 		
-		// postId로 select 해서 post 가져오기 필요 - Model 담기 필요
+	}	
+	
+	// 인증 체크, 동일인 체크
+	@PutMapping({"/post/update/{postid}"})
+	public ResponseEntity<?> update(@RequestBody ReqUpdateDto dto) {
+	
+		int result = postService.글수정(dto);	
 		
-		return "/post/update";
+		if(result == 1) {						
+			return new ResponseEntity<RespCM>(new RespCM(200,"ok"),HttpStatus.OK);
+		}else {
+			return new ResponseEntity<RespCM>(new RespCM(500,"fail"),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}		
+	
+	// 인증 체크, 동일인 체크
+	@DeleteMapping({"/post/delete/{postid}"})
+	public ResponseEntity<?> delete(@PathVariable int postid) {
+	
+		int result = postService.글삭제(postid);	
+		
+		if(result == 1) {						
+			return new ResponseEntity<RespCM>(new RespCM(200,"ok"),HttpStatus.OK);
+		}else {
+			return new ResponseEntity<RespCM>(new RespCM(500,"fail"),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}	
+	
+	// 인증 체크, 동일인 체크
+	@GetMapping({"/post/detail/{postid}"})
+	public String detail(@PathVariable int postid, Model model) {
+		
+		Post post = postService.글상세조회(postid);
+		
+		model.addAttribute("post", post);
+		
+		return "/post/detail";
 	}
 }

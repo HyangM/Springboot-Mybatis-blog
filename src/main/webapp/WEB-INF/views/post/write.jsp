@@ -16,6 +16,30 @@
 	<button id="write--submit" class="btn btn-primary">등록</button>
 </div>
 
+<script>
+	$('#write--submit').on('click', function(){
+		var data = {
+			title: $('#title').val(),
+			content: $('#content').val(),
+			userId: ${sessionScope.principal.id}
+		}; 
+	
+		$.ajax({
+			type:'POST',
+			url:'/post/write',
+			data:JSON.stringify(data),
+			contentType:'application/json; charset=utf-8',
+			dataType:'json'
+		}).done(function(r){
+			alert("글쓰기 성공");
+			location.href='/';
+		}).fail(function(r){
+			alert("글쓰기 실패");
+		});
+	});
+
+
+</script>
 <%@include file="../include/footer.jsp"%>
 
 
