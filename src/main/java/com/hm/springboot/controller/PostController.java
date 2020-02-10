@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.annotation.SessionScope;
 
 import com.hm.springboot.model.RespCM;
 import com.hm.springboot.model.post.Post;
 import com.hm.springboot.model.post.dto.ReqUpdateDto;
 import com.hm.springboot.model.post.dto.ReqWriteDto;
+import com.hm.springboot.model.post.dto.RespListDto;
 import com.hm.springboot.model.user.User;
 import com.hm.springboot.service.PostService;
 
@@ -41,8 +43,9 @@ public class PostController {
 	@GetMapping({"","/","post"})
 	public String posts(Model model) {
 		
-		List<Post> posts = postService.글리스트();
+		List<RespListDto> posts = postService.글리스트();
 		model.addAttribute("posts", posts);
+	
 		return "/post/list";
 	}
 	
@@ -61,13 +64,8 @@ public class PostController {
 	@PostMapping({"/post/write"})
 	public ResponseEntity<?> write(@Valid @RequestBody ReqWriteDto dto, BindingResult bindingResult) {
 
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			for(FieldError error:bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			}
-			return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-		}
+		User principal = (User) session.getAttribute("principal");
+		dto.setUserId(principal.getId());
 		
 		int result =  postService.글쓰기(dto);
 		if(result == 1) {
@@ -80,24 +78,18 @@ public class PostController {
 	
 	// 인증 체크, 동일인 체크
 	@GetMapping({"/post/update/{postid}"})
-	public String update(@PathVariable int postid, @RequestParam int userId, Model model) {
+	public String update(@PathVariable int postid, Model model) {
 		
-		User principal = (User)session.getAttribute("principal");
-		
-		if(principal.getId() == userId) {
-			Post post = postService.글상세조회(postid); 
+		Post post = postService.글상세조회(postid); 
 			
-			model.addAttribute("post", post);
+		model.addAttribute("post", post);
 			
-			return "/post/update";
-		}else {
-			return null;
-		}
-		
+		return "/post/update";
+				
 	}	
 	
 	// 인증 체크, 동일인 체크
-	@PutMapping({"/post/update/{postid}"})
+	@PutMapping({"/post/update"})
 	public ResponseEntity<?> update(@RequestBody ReqUpdateDto dto) {
 	
 		int result = postService.글수정(dto);	
@@ -114,14 +106,16 @@ public class PostController {
 	@DeleteMapping({"/post/delete/{postid}"})
 	public ResponseEntity<?> delete(@PathVariable int postid) {
 	
+		
 		int result = postService.글삭제(postid);	
 		
 		if(result == 1) {						
 			return new ResponseEntity<RespCM>(new RespCM(200,"ok"),HttpStatus.OK);
+		}else if(result == -3) {
+			return new ResponseEntity<RespCM>(new RespCM(403,"fail"),HttpStatus.FORBIDDEN);
 		}else {
-			return new ResponseEntity<RespCM>(new RespCM(500,"fail"),HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<RespCM>(new RespCM(400,"fail"),HttpStatus.BAD_REQUEST);
 		}
-		
 	}	
 	
 	// 인증 체크, 동일인 체크

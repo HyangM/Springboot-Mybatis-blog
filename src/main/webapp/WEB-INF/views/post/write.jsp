@@ -20,8 +20,7 @@
 	$('#write--submit').on('click', function(){
 		var data = {
 			title: $('#title').val(),
-			content: $('#content').val(),
-			userId: ${sessionScope.principal.id}
+			content: $('#content').val()
 		}; 
 	
 		$.ajax({

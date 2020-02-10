@@ -13,26 +13,25 @@
 		</div>
 	</form>
 	
-	<button id="update--submit" class="btn btn-primary">수정</button>
+	<button id="update--submit" value="${post.id}"class="btn btn-primary">수정</button>
 </div>
 <script>
 	$('#update--submit').on('click', function(){
 		var data = {
-			postid: ${post.id},
+			postid: $('#update--submit').val(),
 			title: $('#title').val(),
-			content: $('#content').val(),
-			userId: ${sessionScope.principal.id}
+			content: $('#content').val()
 		}; 
 	
 		$.ajax({
 			type:'PUT',
-			url:'/post/update/${post.id}',
+			url:'/post/update',
 			data:JSON.stringify(data),
 			contentType:'application/json; charset=utf-8',
 			dataType:'json'
 		}).done(function(r){
 			alert("글수정 성공");
-			location.href='/post/detail/${post.id}';
+			location.href='/';
 		}).fail(function(r){
 			alert("글수정 실패");
 		});
