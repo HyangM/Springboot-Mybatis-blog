@@ -23,10 +23,13 @@
 		</div>
 		
 		<div class="form-group">
-			<label for="profile">프로필 사진</label> 
-			<input type="file" class="form-control"name="profile"/>
-			<p class="my__profile">${sessionScope.principal.profile}</p>
+			<label for="profile">프로필 사진</label>
+			<div class="my__profile_url"> 
+				<input type="file" class="form-control"name="profile"/>
+				<p class="my__profile">${sessionScope.principal.profile}</p>
+			</div>
 		</div>
+		
 	<button type="submit" class="btn btn-primary">수정</button>
 		
 	</form:form>

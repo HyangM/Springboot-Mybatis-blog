@@ -4,12 +4,12 @@ import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Comment {
 	private int id;
 	private int userId;
@@ -18,11 +18,9 @@ public class Comment {
 	private Timestamp createDate;
 	
 	@Builder
-	public Comment(int userId, int postId, String content, Timestamp createDate) {
-		super();
+	public Comment(int userId, int postId, String content) {
 		this.userId = userId;
 		this.postId = postId;
 		this.content = content;
-		this.createDate = createDate;
 	}
 }

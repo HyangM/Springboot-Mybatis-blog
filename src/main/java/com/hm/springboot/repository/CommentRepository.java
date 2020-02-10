@@ -1,14 +1,10 @@
 package com.hm.springboot.repository;
 
+import com.hm.springboot.model.comment.dto.ReqDetailDto;
+import com.hm.springboot.model.comment.dto.RespDetailDto;
+
 public interface CommentRepository {
-	// 전체보기
-//	List<User> findAll();
-	// 상세보기
-//	Mem findById(int id);
-//	// 회원가입
-//	int save(RequestMemJoinDto mem);
-//	// 회원수정
-//	int update(RequestMemUpdateDto mem);
-//	// 회원삭제
-//	int delete(int id);
+	public int save(ReqDetailDto dto);
+	public RespDetailDto findById(int id);
+	public int delete(int commentId);
 }
