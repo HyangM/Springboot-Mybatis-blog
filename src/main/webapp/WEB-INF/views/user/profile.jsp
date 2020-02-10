@@ -14,7 +14,7 @@
 		
 		<div class="form-group">
 			<label for="password">비밀번호</label> 
-			<input type="password" class="form-control" placeholder="Enter password" name="password"value=""/>
+			<input type="password" class="form-control" placeholder="Enter password" name="password"value="" required="required"/>
 		</div>
 		
 		<div class="form-group">

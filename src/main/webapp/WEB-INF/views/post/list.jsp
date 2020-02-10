@@ -5,7 +5,7 @@
 
 <div class="container">
 	<table class="table">
-		<thead class="thead-dark">
+		<thead class="thead">
 			<tr>
 				<th>No</th>
 				<th>제목</th>

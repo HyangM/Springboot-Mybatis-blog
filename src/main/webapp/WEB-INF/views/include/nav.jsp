@@ -14,7 +14,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+	<nav class="navbar navbar-expand-md bg-warning navbar-light">
 		<!-- Brand -->
 		<a class="navbar-brand" href="/">Blog</a>
 
@@ -40,7 +40,7 @@
 				</c:choose>
 				
 			</ul>
-			<img src="/images/bin.jpg"class="rounded-circle my__img ml-auto"width="30px"height="30px"onerror="javascript:this.src='/images/unknown.jpg'"/>
+			<img src="/media/${sessionScope.principal.profile}"class="rounded-circle my__img ml-auto"width="30px"height="30px"onerror="javascript:this.src='/images/unknown.jpg'"/>
 		</div>
 	</nav>
 	<br />
