@@ -32,11 +32,12 @@ use spring;
 ```
 ```sql
 CREATE TABLE user(
-    id int auto_increment primary key,
-    username varchar(100) not null,
+	id int auto_increment primary key,
+    username varchar(100) UNIQUE not null,
     password varchar(100) not null,
     email varchar(100),
     profile varchar(200),
+    role varchar(10),
     createDate timestamp
 ) engine=InnoDB default charset=utf8;
 ```
