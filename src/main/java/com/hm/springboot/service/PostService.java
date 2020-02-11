@@ -54,9 +54,8 @@ public class PostService {
 		
 	}
 	
-	public int 글삭제(int postid){
+	public int 글삭제(int postid, User principal){
 		// 동일인 체크 session의 principal.id == 해당 post.id로 select한 userid값
-		User principal = (User)session.getAttribute("principal");
 		Post post = postRepository.findOne(postid);
 		
 		if(principal.getId() == post.getUserId()) {

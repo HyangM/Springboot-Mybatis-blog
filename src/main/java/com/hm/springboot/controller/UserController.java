@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -31,13 +32,11 @@ import com.hm.springboot.model.RespCM;
 import com.hm.springboot.model.ReturnCode;
 import com.hm.springboot.model.user.User;
 import com.hm.springboot.model.user.dto.ReqJoinDto;
-import com.hm.springboot.model.user.dto.ReqLoginDto;
 import com.hm.springboot.service.UserService;
+import com.hm.springboot.util.Script;
 
 @Controller
 public class UserController {
-
-	private static final String TAG="UserController : ";
 	
 	@Autowired
 	private UserService userService;
@@ -66,10 +65,8 @@ public class UserController {
 	
 	// 인증, 동일인 체크
 	@GetMapping({"/user/profile/{id}"})
-	public String profile(@PathVariable int id) {
-		
-		User principal = (User)session.getAttribute("principal");
-		
+	public String profile(@PathVariable int id, @AuthenticationPrincipal User principal) {
+				
 		if(principal.getId() == id) {
 			return "/user/profile";
 		}else {
@@ -80,7 +77,7 @@ public class UserController {
 	
 	// form:form 사용함!!
 	@PutMapping({"/user/profile"})
-	public @ResponseBody String profile(@RequestParam int id, @RequestParam String password, @RequestParam MultipartFile profile) {
+	public @ResponseBody String profile(@RequestParam int id, @RequestParam String password, @RequestParam MultipartFile profile, @AuthenticationPrincipal User principal) {
 		
 		UUID uuid = UUID.randomUUID();
 		String uuidFilename = uuid+"_"+profile.getOriginalFilename();
@@ -93,22 +90,28 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		int result = userService.수정완료(id, password, uuidFilename);
+		int result = userService.수정완료(id, password, uuidFilename, principal);
 		
-		StringBuffer sb = new StringBuffer();
 		if(result == 1) {
-			sb.append("<script>");
-			sb.append("alert('수정완료');");
-			sb.append("location.href='/';");
-			sb.append("</script>");
-			return sb.toString();
+			return Script.href("수정완료", "/");
 		}else {
-			sb.append("<script>");
-			sb.append("alert('수정실패');");
-			sb.append("history.back();");
-			sb.append("</script>");
-			return sb.toString();
-		}
+			return Script.back("수정실패");
+		}	
+		
+//		StringBuffer sb = new StringBuffer();
+//		if(result == 1) {
+//			sb.append("<script>");
+//			sb.append("alert('수정완료');");
+//			sb.append("location.href='/';");
+//			sb.append("</script>");
+//			return sb.toString();
+//		}else {
+//			sb.append("<script>");
+//			sb.append("alert('수정실패');");
+//			sb.append("history.back();");
+//			sb.append("</script>");
+//			return sb.toString();
+//		}
 	}
 	
 	// 메시지 컨버터(Jackson Mapper)는 request받을 때 setter로 호출한다.
@@ -127,31 +130,25 @@ public class UserController {
 		
 		if(result == -2) {
 			return new ResponseEntity<RespCM>(new RespCM(ReturnCode.아이디중복,"아이디중복"),HttpStatus.OK);
-//			return new ResponseEntity<RespCM>(new RespCM(-2,"아이디중복"),HttpStatus.OK);
 		}else if(result == 1){
 			return new ResponseEntity<RespCM>(new RespCM(200,"ok"),HttpStatus.OK);
 		}else {
 			return new ResponseEntity<RespCM>(new RespCM(500,"fail"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}		
 	}
-
-	@PostMapping("/user/login")
-	public ResponseEntity<?> login(@Valid @RequestBody ReqLoginDto dto, BindingResult bindingResult) {
-		
-		// request 검증 = AOP로 처리할 예정
-		//서비스 호출
-		User user = userService.로그인(dto);
-//		Role role1 = new Role(1, 1, "2");
-//		List<Role> roles = new ArrayList<>();
-//		roles.add(role1);
-		
-		User principal = userService.로그인(dto);
-		
-		if(principal != null) {
-			session.setAttribute("principal", principal);
-			return new ResponseEntity<RespCM>(new RespCM(200,"ok"),HttpStatus.OK);
-		}else {
-			return new ResponseEntity<RespCM>(new RespCM(400,"fail"),HttpStatus.BAD_REQUEST);
-		}
-	}	
+	/*
+	 * @PostMapping("/user/loginProc") public ResponseEntity<?>
+	 * login(@Valid @RequestBody ReqLoginDto dto, BindingResult bindingResult) {
+	 * 
+	 * // request 검증 = AOP로 처리할 예정 //서비스 호출 User user = userService.로그인(dto); //
+	 * Role role1 = new Role(1, 1, "2"); // List<Role> roles = new ArrayList<>(); //
+	 * roles.add(role1);
+	 * 
+	 * User principal = userService.로그인(dto);
+	 * 
+	 * if(principal != null) { session.setAttribute("principal", principal); return
+	 * new ResponseEntity<RespCM>(new RespCM(200,"ok"),HttpStatus.OK); }else {
+	 * return new ResponseEntity<RespCM>(new
+	 * RespCM(400,"fail"),HttpStatus.BAD_REQUEST); } }
+	 */
 }

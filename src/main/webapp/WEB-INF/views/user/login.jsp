@@ -5,7 +5,7 @@
 	<form>
 		<div class="form-group">
 			<label for="username">아이디</label> 
-			<input type="text" class="form-control" placeholder="Enter username" id="username">
+			<input type="text" class="form-control" placeholder="Enter username" id="username" >
 		</div>
 		<div class="form-group">
 			<label for="password">비밀번호</label> 
@@ -25,14 +25,17 @@
 
 		$.ajax({
 			type:'POST',
-			url:'/user/login',
-			data:JSON.stringify(data),
-			contentType:'application/json; charset=utf-8',
+			url:'/user/loginProc',
+			data:data, //username=ssar&password=1234
+			contentType:'application/x-www-form-urlencoded',
 			dataType:'json'
 		}).done(function(r){
+			console.log(r);
 			alert("로그인 성공");
 			location.href='/';
 		}).fail(function(r){
+			console.log('statusCode : ' + r.statusCode);
+			console.log(r);
 			alert("로그인 실패");
 		});
 	});

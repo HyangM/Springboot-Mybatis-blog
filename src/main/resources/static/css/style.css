@@ -15,3 +15,8 @@
 .navbar{
 	font-weight: bold;
 }
+
+.comment--item {
+	
+	border: 1px solid #cbc0c0;
+}

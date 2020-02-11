@@ -49,13 +49,12 @@ public class CommentService {
 		}
 	}
 	
-	public int 댓글삭제(int commentId) {
+	public int 댓글삭제(int commentId, User principal) {
 		
 		// 댓글 작성자 
 		RespDetailDto comment = commentRepository.findById(commentId);
 		
 		// 현재 로그인한 주체
-		User principal = (User)session.getAttribute("principal");
 		
 		if(comment.getUserId() == principal.getId()) {
 			return commentRepository.delete(commentId);	

@@ -3,6 +3,7 @@ package com.hm.springboot.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hm.springboot.model.RespCM;
 import com.hm.springboot.model.comment.dto.ReqDetailDto;
 import com.hm.springboot.model.comment.dto.RespDetailDto;
+import com.hm.springboot.model.user.User;
 import com.hm.springboot.service.CommentService;
 
 // @Controller + @ResponseBody
@@ -36,9 +38,9 @@ public class CommentController {
 	}
 
 	@DeleteMapping("/comment/delete/{commentId}")
-	public ResponseEntity<?> delete(@PathVariable int commentId) {
+	public ResponseEntity<?> delete(@PathVariable int commentId, @AuthenticationPrincipal User principal) {
 		
-		int result = commentService.댓글삭제(commentId);
+		int result = commentService.댓글삭제(commentId, principal);
 		if (result == 1) {
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
 		}else if (result == -3){

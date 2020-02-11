@@ -5,8 +5,8 @@
 <mapper namespace="com.hm.springboot.repository.UserRepository">
      
    <insert id="save">
-	 insert into user(username, password, email, createDate) 
-	 values(#{username},#{password},#{email},now())
+	 insert into user(username, password, email, role, createDate) 
+	 values(#{username},#{password},#{email},'USER',now())
    </insert>
    
   <select id="findByUsername" resultType="int">
@@ -19,6 +19,10 @@
 
   <select id="findById" resultType="com.hm.springboot.model.user.User">
     select id, username, email, profile, createDate from user where id = #{id}
+  </select>
+
+  <select id="authentication" resultType="com.hm.springboot.model.user.User">
+    select * from user where username = #{username}
   </select>
       
    <update id="update">

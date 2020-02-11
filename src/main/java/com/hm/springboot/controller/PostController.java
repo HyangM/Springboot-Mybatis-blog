@@ -1,27 +1,21 @@
 package com.hm.springboot.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.annotation.SessionScope;
 
 import com.hm.springboot.model.RespCM;
 import com.hm.springboot.model.post.Post;
@@ -66,9 +60,8 @@ public class PostController {
 	
 	// 인증 체크
 	@PostMapping({"/post/write"})
-	public ResponseEntity<?> write(@Valid @RequestBody ReqWriteDto dto, BindingResult bindingResult) {
+	public ResponseEntity<?> write(@RequestBody ReqWriteDto dto, @AuthenticationPrincipal User principal) {
 
-		User principal = (User) session.getAttribute("principal");
 		dto.setUserId(principal.getId());
 		
 		int result =  postService.글쓰기(dto);
@@ -108,10 +101,10 @@ public class PostController {
 	
 	// 인증 체크, 동일인 체크
 	@DeleteMapping({"/post/delete/{postid}"})
-	public ResponseEntity<?> delete(@PathVariable int postid) {
+	public ResponseEntity<?> delete(@PathVariable int postid, @AuthenticationPrincipal User principal) {
 	
 		
-		int result = postService.글삭제(postid);	
+		int result = postService.글삭제(postid, principal);	
 		
 		if(result == 1) {						
 			return new ResponseEntity<RespCM>(new RespCM(200,"ok"),HttpStatus.OK);

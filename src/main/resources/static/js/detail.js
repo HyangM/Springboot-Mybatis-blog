@@ -39,13 +39,12 @@ $('#comment--save--submit').on('click', function() {
 });
 
 	
-function makeCommentItem(r){
-	var comment_item = `<div id="comment--item--${r.id}">`;	
-	comment_item += `<span class="comment--username">작성자: ${r.username} </span>`;		
-	comment_item += `<span class="comment--content"> ${r.content} </span>`;	
-	comment_item += `<button onclick="commentDelete(${r.id})">삭제</button>`;
-	comment_item += `</div>`;		
-	
+function makeCommentItem(r) {
+	var comment_item = `<li id="comment--item--${r.id}" class="list-group-item d-flex justify-content-between align-items-center">`;
+	comment_item += `<div class="font-italic">${r.content}</div>`;
+	comment_item += `<div class="badge badge-warning badge-pill ml-auto">작성자:${r.username}</div>`;
+	comment_item += `<button onclick="commentDelete(${r.id})" class="badge badge-danger badge-pill">삭제</button>`;
+	comment_item += `</li>`;
 	$('#comment--items').prepend(comment_item);
 }
 
