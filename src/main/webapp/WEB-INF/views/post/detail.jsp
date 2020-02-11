@@ -39,9 +39,17 @@
 			<div class="card-header">
 				<h4 class="card-title">댓글 리스트</h4>
 			</div>
+			<c:forEach var="comment" items="${comments}">
 			<div id="comment--items" class="card-body">
-				
+				<div id="comment--item--${comment.id}">
+					<span class="comment--username">작성자: ${comment.username} </span> 
+					<span class="comment--content"> ${comment.content} </span>
+					<c:if test="${comment.userId eq sessionScope.principal.id}">
+						<button onclick="commentDelete(${comment.id})">삭제</button>
+					</c:if>
+				</div>
 			</div>
+			</c:forEach>
 		</div>
 	</div>
 </div>

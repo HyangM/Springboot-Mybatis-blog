@@ -29,6 +29,7 @@ import com.hm.springboot.model.post.dto.ReqUpdateDto;
 import com.hm.springboot.model.post.dto.ReqWriteDto;
 import com.hm.springboot.model.post.dto.RespListDto;
 import com.hm.springboot.model.user.User;
+import com.hm.springboot.service.CommentService;
 import com.hm.springboot.service.PostService;
 
 @Controller
@@ -36,6 +37,9 @@ public class PostController {
 		
 	@Autowired
 	private PostService postService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	@Autowired
 	private HttpSession session;
@@ -122,9 +126,9 @@ public class PostController {
 	@GetMapping({"/post/detail/{postid}"})
 	public String detail(@PathVariable int postid, Model model) {
 		
-		Post post = postService.글상세조회(postid);
 		
-		model.addAttribute("post", post);
+		model.addAttribute("comments", commentService.댓글목록보기(postid));
+		model.addAttribute("post", postService.글상세조회(postid));
 		
 		return "/post/detail";
 	}

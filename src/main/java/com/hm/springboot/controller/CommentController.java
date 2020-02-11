@@ -35,12 +35,15 @@ public class CommentController {
 
 	}
 
-	@DeleteMapping("/comment/delete/commentId")
+	@DeleteMapping("/comment/delete/{commentId}")
 	public ResponseEntity<?> delete(@PathVariable int commentId) {
+		
 		int result = commentService.댓글삭제(commentId);
 		if (result == 1) {
 			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
-		} else {
+		}else if (result == -3){
+			return new ResponseEntity<RespCM>(new RespCM(403, "fail"), HttpStatus.FORBIDDEN);
+		}else {
 			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
 		}
 	}

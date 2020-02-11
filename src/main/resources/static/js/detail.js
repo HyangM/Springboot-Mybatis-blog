@@ -63,7 +63,11 @@ function commentDelete(commentId){
 			alert("댓글삭제 실패");
 		}
 	}).fail(function(r) {
-		alert("댓글삭제 실패");
+		if(r.statusCode = 403){
+			
+		}else{
+			alert("댓글삭제 실패");
+		}
 	});
 
 }
