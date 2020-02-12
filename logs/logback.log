@@ -1,0 +1,12 @@
+[2020-02-12 10:49:06:156258][http-nio-8080-exec-2] WARN  c.h.s.aop.warn.BindingAdvice - com.hm.springboot.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
+[2020-02-12 10:49:07:157026][http-nio-8080-exec-4] WARN  c.h.s.aop.warn.BindingAdvice - com.hm.springboot.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
+[2020-02-12 10:49:08:157887][http-nio-8080-exec-6] WARN  c.h.s.aop.warn.BindingAdvice - com.hm.springboot.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
+[2020-02-12 10:49:09:158586][http-nio-8080-exec-8] WARN  c.h.s.aop.warn.BindingAdvice - com.hm.springboot.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
+[2020-02-12 10:49:09:159097][http-nio-8080-exec-10] WARN  c.h.s.aop.warn.BindingAdvice - com.hm.springboot.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
+[2020-02-12 10:49:10:160215][http-nio-8080-exec-1] WARN  c.h.s.aop.warn.BindingAdvice - com.hm.springboot.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
+[2020-02-12 10:49:11:161030][http-nio-8080-exec-3] WARN  c.h.s.aop.warn.BindingAdvice - com.hm.springboot.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
+[2020-02-12 10:49:12:161723][http-nio-8080-exec-5] WARN  c.h.s.aop.warn.BindingAdvice - com.hm.springboot.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
+[2020-02-12 10:49:12:162400][http-nio-8080-exec-8] WARN  c.h.s.aop.warn.BindingAdvice - com.hm.springboot.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
+[2020-02-12 10:49:13:163100][http-nio-8080-exec-9] WARN  c.h.s.aop.warn.BindingAdvice - com.hm.springboot.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
+[2020-02-12 10:49:14:163796][http-nio-8080-exec-1] WARN  c.h.s.aop.warn.BindingAdvice - com.hm.springboot.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.
+[2020-02-12 10:49:15:164491][http-nio-8080-exec-4] WARN  c.h.s.aop.warn.BindingAdvice - com.hm.springboot.controller.UserController.join() => 필드 : email 경고 : 이메일 양식이 틀렸습니다.

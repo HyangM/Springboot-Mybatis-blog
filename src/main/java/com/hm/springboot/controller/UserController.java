@@ -32,6 +32,7 @@ import com.hm.springboot.model.RespCM;
 import com.hm.springboot.model.ReturnCode;
 import com.hm.springboot.model.user.User;
 import com.hm.springboot.model.user.dto.ReqJoinDto;
+import com.hm.springboot.service.MyUserDetailService;
 import com.hm.springboot.service.UserService;
 import com.hm.springboot.util.Script;
 
@@ -43,6 +44,9 @@ public class UserController {
 	
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private MyUserDetailService userDetailService;
 	
 	@Value("${file.path}")
 	private String fileRealPath;	// 서버에 배포하면 경로 변경해야함.
@@ -77,7 +81,9 @@ public class UserController {
 	
 	// form:form 사용함!!
 	@PutMapping({"/user/profile"})
-	public @ResponseBody String profile(@RequestParam int id, @RequestParam String password, @RequestParam MultipartFile profile, @AuthenticationPrincipal User principal) {
+	public @ResponseBody String profile(@RequestParam int id, @RequestParam String password, @RequestParam MultipartFile profile) {
+
+		User principal = userDetailService.getPrincipal();
 		
 		UUID uuid = UUID.randomUUID();
 		String uuidFilename = uuid+"_"+profile.getOriginalFilename();
@@ -90,7 +96,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		int result = userService.수정완료(id, password, uuidFilename, principal);
+		int result = userService.수정완료(id, password, uuidFilename);
 		
 		if(result == 1) {
 			return Script.href("수정완료", "/");
@@ -117,15 +123,7 @@ public class UserController {
 	// 메시지 컨버터(Jackson Mapper)는 request받을 때 setter로 호출한다.
 	@PostMapping("/user/join")
 	public ResponseEntity<?> join(@Valid @RequestBody ReqJoinDto dto, BindingResult bindingResult) {
-		
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			for(FieldError error:bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			}
-			return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-		}
-		
+				
 		int result = userService.회원가입(dto);
 		
 		if(result == -2) {

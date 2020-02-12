@@ -1,8 +1,5 @@
 package com.hm.springboot.service;
 
-import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,10 +18,10 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private HttpSession session;
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	private MyUserDetailService userDetailService;
 	
 	// result = 0 비정상, 1 정상, -1 DB오류, -2 아이디 중복
 	@Transactional
@@ -51,7 +48,10 @@ public class UserService {
 		return userRepository.findByUsernameAndPassword(dto);
 	}
 	
-	public int 수정완료(int id, String password, String profile, User principal) {
+	public int 수정완료(int id, String password, String profile) {
+		
+		User principal = userDetailService.getPrincipal();
+//		User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		String encodePassword = passwordEncoder.encode(password);
 		int result = userRepository.update(id, password, profile);
